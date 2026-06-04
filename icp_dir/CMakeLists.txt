@@ -23,3 +23,8 @@ add_executable(2_pcd_io 2_pcd_io.cpp)
 target_link_libraries(2_pcd_io
     ${PCL_LIBRARIES}
 )
+
+add_executable(3_icp_svd 3_icp_svd.cpp)
+target_link_libraries(3_icp_svd
+    ${PCL_LIBRARIES}
+)
