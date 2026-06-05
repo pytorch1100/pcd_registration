@@ -6,6 +6,7 @@ find_package(PCL 1.8 REQUIRED COMPONENTS
     common
     io
     visualization
+    kdtree_flann
 )
 message(STATUS "PCL include dir: ${PCL_INCLUDE_DIRS}")
 message(STATUS "PCL lib dirs: ${PCL_LIBRARIES}")
@@ -27,4 +28,14 @@ target_link_libraries(2_pcd_io
 add_executable(3_icp_svd 3_icp_svd.cpp)
 target_link_libraries(3_icp_svd
     ${PCL_LIBRARIES}
+)
+
+add_executable(4_pcd_kd_tree 4_pcd_kd_tree.cpp)
+target_link_libraries(4_pcd_kd_tree
+   ${PCL_LIBRARIES}
+)
+
+add_executable(5_icp_p2p_svd 5_icp_p2p_svd.cpp)
+target_link_libraries(5_icp_p2p_svd
+   ${PCL_LIBRARIES}
 )

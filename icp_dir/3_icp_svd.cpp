@@ -37,7 +37,7 @@ int main(int argc, char* argv[])
     icp_obj.setMaximumIterations(10);
     icp_obj.setTransformationEpsilon(1e-10);      // 变换矩阵变化阈值
     icp_obj.setEuclideanFitnessEpsilon(1e-6);     // 均方误差变化阈值
-    icp_obj.setMaxCorrespondenceDistance(0.05);   // 最大对应点距离
+    icp_obj.setMaxCorrespondenceDistance(0.5);   // 最大对应点距离
 
     pcdptr aligned(new pcl::PointCloud<pcl::PointXYZI>);
     icp_obj.setInputSource(source_pcd);
@@ -53,10 +53,16 @@ int main(int argc, char* argv[])
         std::cout << "ICP did not converge!" << std::endl;
     }
 
+    Eigen::Matrix3f R(icp_obj.getFinalTransformation().block<3, 3>(0, 0));
+    Eigen::Quaternionf q(R);
+     std::cout << "q: " << q.w() << q.x() << q.y() << q.z() << std::endl;
+
     pcl::visualization::PCLVisualizer viewer("pointcloud viewer befor registration");
-    viewer.addPointCloud<pcl::PointXYZI>(source_pcd, "cloud1");
+    // viewer.addPointCloud<pcl::PointXYZI>(source_pcd, "cloud1");
 
     viewer.addPointCloud<pcl::PointXYZI>(dst_pcd, "cloud2");
+
+    viewer.addPointCloud<pcl::PointXYZI>(aligned, "aligned");
     viewer.spin();
 
     return 0;
